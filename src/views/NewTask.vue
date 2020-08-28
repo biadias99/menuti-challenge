@@ -75,9 +75,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.textField {
-  font-size: 20px;
-}
-</style>
