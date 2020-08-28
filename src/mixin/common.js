@@ -17,6 +17,9 @@ export default {
       'setTask',
       'setSnackbar',
       'resetTask',
+      'setMessage',
+      'deleteTask',
+      'updateText',
     ]),
   },
 };

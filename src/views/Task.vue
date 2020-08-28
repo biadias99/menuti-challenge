@@ -11,14 +11,14 @@
       </v-btn>
 
       <span class="text-h4 font-weight-bold ml-4">
-        Nova tarefa
+        {{ title }}
       </span>
     </v-row>
 
     <v-text-field
       v-model="task"
       placeholder="Digite uma atividade"
-      @keydown.enter="create"
+      @keydown.enter="createOrUpdate()"
       clearable
       outlined
       rounded
@@ -34,7 +34,7 @@
         x-large
         rounded
         dark
-        @click="create"
+        @click="createOrUpdate()"
       >
         Ok
       </v-btn>
@@ -46,9 +46,23 @@
 import CommonMixin from '../mixin/common';
 
 export default {
-  name: 'NewTask',
+  name: 'Task',
 
   mixins: [CommonMixin],
+
+  props: {
+    title: {
+      type: String,
+      required: true,
+    },
+    isEdit: {
+      type: Boolean,
+      default: false,
+    },
+    taskId: {
+      type: String,
+    },
+  },
 
   computed: {
     task: {
@@ -62,15 +76,26 @@ export default {
   },
 
   methods: {
-    async create() {
-      if (this.task) {
-        await this.createTask({
-          done: false,
-          name: this.task,
-          created_at: new Date().toLocaleString(),
-        });
+    async createOrUpdate() {
+      if (this.task ? this.task.trim() : this.task) {
+        if (this.isEdit) {
+          await this.updateText({
+            name: this.task,
+            id: this.taskId,
+          });
+          await this.loadTasks();
+        } else {
+          await this.createTask({
+            done: false,
+            name: this.task,
+            created_at: new Date().toLocaleString('en-US'),
+          });
+        }
+        this.$router.push('/');
+      } else {
+        this.setMessage('Por favor, digite uma atividade válida.');
+        this.setSnackbar(true);
       }
-      this.$router.push('/');
     },
   },
 };

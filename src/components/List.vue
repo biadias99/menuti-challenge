@@ -13,7 +13,7 @@
             <v-list-item-action>
               <v-checkbox
                 v-model="task.done"
-                :color="task.done && 'grey' || 'black'"
+                :color="task.done && 'deep-purple accent-4' || 'black'"
                 @click="update(task.id, task.done)"
               >
                 <template v-slot:label>
@@ -26,8 +26,31 @@
                 </template>
               </v-checkbox>
             </v-list-item-action>
+
+            <v-spacer />
+
+            <v-list-item-action>
+              <v-btn
+                icon
+                :key="`btn-${i}`"
+                @click="callUpdatePage(task.id, task.name)"
+              >
+                <v-icon color="#2c3e50">mdi-pencil</v-icon>
+              </v-btn>
+            </v-list-item-action>
+
+            <v-list-item-action>
+              <v-btn
+                icon
+                :key="`btn-${i}`"
+                @click="deleteTaskId(task.id)"
+              >
+                <v-icon color="#2c3e50">mdi-delete</v-icon>
+              </v-btn>
+            </v-list-item-action>
           </v-list-item>
         </template>
+
       </v-card>
 
       <v-alert
@@ -67,6 +90,21 @@ export default {
     async update(id, status) {
       await this.updateTask({
         id, status,
+      });
+    },
+    async deleteTaskId(id) {
+      await this.deleteTask(id);
+      await this.loadTasks();
+    },
+    callUpdatePage(id, name) {
+      this.setTask(name);
+      this.$router.push({
+        name: 'Tasks',
+        params: {
+          title: 'Editar atividade',
+          isEdit: true,
+          taskId: id,
+        },
       });
     },
   },

@@ -42,7 +42,7 @@ export default new Vuex.Store({
   actions: {
     async loadTasks({ commit }) {
       commit('SET_LOADING', true);
-      firebase.firestore().collection('tasks').orderBy('created_at', 'asc').get()
+      await firebase.firestore().collection('tasks').orderBy('created_at', 'asc').get()
         .then((response) => {
           commit('LOAD_TASKS', response.docs);
           commit('SET_LOADING', false);
@@ -53,7 +53,7 @@ export default new Vuex.Store({
         });
     },
     async createTask({ commit }, payload) {
-      firebase.firestore().collection('tasks').add(payload)
+      await firebase.firestore().collection('tasks').add(payload)
         .then(() => {
           commit('RESET_TASK');
           commit('SET_MESSAGE', 'Atividade adicionada com sucesso.');
@@ -65,10 +65,34 @@ export default new Vuex.Store({
         });
     },
     async updateTask({ commit }, payload) {
-      firebase.firestore().collection('tasks').doc(payload.id).update({
+      await firebase.firestore().collection('tasks').doc(payload.id).update({
         done: payload.status,
       })
         .then(() => {})
+        .catch((error) => {
+          commit('SET_MESSAGE', error);
+          commit('SET_SNACKBAR', true);
+        });
+    },
+    async updateText({ commit }, payload) {
+      await firebase.firestore().collection('tasks').doc(payload.id).update({
+        name: payload.name,
+      })
+        .then(() => {
+          commit('SET_MESSAGE', 'Atividade atualizada com sucesso.');
+          commit('SET_SNACKBAR', true);
+        })
+        .catch((error) => {
+          commit('SET_MESSAGE', error);
+          commit('SET_SNACKBAR', true);
+        });
+    },
+    async deleteTask({ commit }, payload) {
+      await firebase.firestore().collection('tasks').doc(payload).delete()
+        .then(() => {
+          commit('SET_MESSAGE', 'Atividade excluída com sucesso.');
+          commit('SET_SNACKBAR', true);
+        })
         .catch((error) => {
           commit('SET_MESSAGE', error);
           commit('SET_SNACKBAR', true);
@@ -82,6 +106,9 @@ export default new Vuex.Store({
     },
     async resetTask({ commit }) {
       commit('RESET_TASK');
+    },
+    async setMessage({ commit }, payload) {
+      commit('SET_MESSAGE', payload);
     },
   },
 });

@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Home from '../views/Home.vue';
-import Tasks from '../views/NewTask.vue';
+import Tasks from '../views/Task.vue';
 
 Vue.use(VueRouter);
 
@@ -15,6 +15,7 @@ const routes = [
     path: '/tasks',
     name: 'Tasks',
     component: Tasks,
+    props: true,
   },
 ];
 
