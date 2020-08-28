@@ -9,7 +9,7 @@
         />
 
         <template v-for="(task, i) in tasks">
-          <v-list-item :key="`${i}-${task.name}`">
+          <v-list-item :key="`${i}-${task.name}`" class="pl-0">
             <v-list-item-action>
               <v-checkbox
                 v-model="task.done"
@@ -17,11 +17,12 @@
                 @click="update(task.id, task.done)"
               >
                 <template v-slot:label>
-                  <div
+                  <span
                     :class="task.done && 'grey--text text-decoration-line-through' || 'black--text'"
-                    class="ml-4"
-                    v-text="task.name"
-                  ></div>
+                    class="ml-2 text-h6 font-weight-light"
+                  >
+                  {{ task.name }}
+                  </span>
                 </template>
               </v-checkbox>
             </v-list-item-action>

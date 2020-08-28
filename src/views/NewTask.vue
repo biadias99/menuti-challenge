@@ -1,5 +1,5 @@
 <template>
-  <v-container style="max-width: 500px" class="mt-6">
+  <v-container style="max-width: 600px" class="mt-4 pa-6">
     <v-row align="center">
       <v-btn
         color="deep-purple accent-4"
@@ -10,7 +10,7 @@
         <v-icon>mdi-keyboard-backspace</v-icon>
       </v-btn>
 
-      <span class="text-h3 font-weight-medium ml-4">
+      <span class="text-h4 font-weight-bold ml-4">
         Nova tarefa
       </span>
     </v-row>
@@ -23,7 +23,7 @@
       outlined
       rounded
       color="deep-purple accent-4"
-      class="textField mt-10"
+      class="text-h6 font-weight-regular mt-10"
       height="60px"
     />
 

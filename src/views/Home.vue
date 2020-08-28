@@ -1,7 +1,7 @@
 <template>
-  <v-container style="max-width: 500px;" class="mt-5">
+  <v-container style="max-width: 600px;" class="mt-3 pa-6">
     <v-row align="center">
-      <span class="text-h3 font-weight-medium">
+      <span class="text-h4 font-weight-bold">
         To-Do List
       </span>
 
